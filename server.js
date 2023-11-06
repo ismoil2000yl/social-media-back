@@ -69,20 +69,6 @@ io.on("connection", (socket) => {
 
     socket.on('new-user', async () => {
         const members = await User.find();
-
-        router.get('/users', async (req, res) => {
-            try {
-                res.status(201).json(members)
-            }
-            catch (err) {
-                conosle.log(err)
-                res.status(400).send()
-            }
-        })
-        app.get('/users', (req, res) => {
-            res.json(members)
-        })
-
         io.emit('new-user', members)
     })
 

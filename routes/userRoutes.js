@@ -53,4 +53,16 @@ router.post('/login', async (req, res) => {
     }
 });
 
+const users = await User.find();
+
+router.get('/users', async (req, res) => {
+    try {
+        res.status(201).json(users)
+    }
+    catch (err) {
+        conosle.log(err)
+        res.status(400).send()
+    }
+})
+
 module.exports = router
