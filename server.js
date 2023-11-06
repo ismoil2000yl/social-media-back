@@ -10,6 +10,8 @@ app.use(express.urlencoded({ extended: true }));
 app.use(express.json());
 app.use(cors())
 
+const [users, setUsers] = useState([])
+
 app.use('/users', userRoutes)
 require('./connection')
 
@@ -42,6 +44,16 @@ app.get('/rooms', (req, res) => {
     res.json(rooms)
 })
 
+app.get('/users', (req, res) => {
+    try {
+        res.json(users)
+    }
+    catch (err) {
+        conosle.log(err)
+        res.status(400).send()
+    }
+})
+
 const getLastMessagesFromRoom = async (room) => {
     let roomMessages = await Message.aggregate([
         { $match: { to: room } },
@@ -68,6 +80,7 @@ io.on("connection", (socket) => {
 
     socket.on('new-user', async () => {
         const members = await User.find();
+        setUsers(members)
         io.emit('new-user', members)
     })
 
