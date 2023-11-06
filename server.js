@@ -1,4 +1,5 @@
 const express = require("express");
+const router = require("express").Router();
 const app = express();
 const userRoutes = require('./routes/userRoutes')
 const User = require("./models/user")
@@ -44,9 +45,9 @@ app.get('/rooms', (req, res) => {
     res.json(rooms)
 })
 
-app.get('/users', (req, res) => {
+router.get('/users', async (req, res) => {
     try {
-        res.json(users)
+        res.status(201).json(users)
     }
     catch (err) {
         conosle.log(err)
