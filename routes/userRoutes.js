@@ -53,9 +53,9 @@ router.post('/login', async (req, res) => {
     }
 });
 
-const users = await User.find();
 
 router.get('/users', async (req, res) => {
+    const users = await User.find();
     try {
         res.status(201).json(users)
     }
